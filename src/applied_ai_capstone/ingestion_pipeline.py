@@ -5,6 +5,15 @@ import requests
 from datasets import load_dataset
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+from dotenv import dotenv_values
+
+# Get the path to the directory where this script lives
+script_dir = Path(__file__).resolve().parent
+env_path = script_dir / ".env"
+
+config = dotenv_values(env_path)
+
 
 DEPLOY_ENV = os.getenv("DEPLOY_ENV", "LOCAL")
 VECTOR_DIM = 768 if DEPLOY_ENV == "LOCAL" else 1536
@@ -14,7 +23,7 @@ MAX_WORKERS = 5  # Sped up across 5 parallel thread streams concurrently
 print(f"Launching Multithreaded Ingestion Core in [{DEPLOY_ENV}] Mode...")
 
 # Initialize empty list to buffer raw text blocks from streaming connection
-print("🔗 Opening streaming data pool from Hugging Face...")
+print("Opening streaming data pool from Hugging Face...")
 sec_stream = load_dataset("PleIAs/SEC", split="train", streaming=True)
 
 # Pull and slice raw documents into text strings array quickly
@@ -40,7 +49,7 @@ def process_single_vector_record(task_tuple):
     chunk_text, index = task_tuple
     
     # Establish dynamic individual database thread connections safely
-    db_conn = "dbname=aifootprint user=db_admin_root password='Naveen_2026@' host=localhost port=5432"
+    db_conn = f"dbname={config['DB_NAME']} user={config['DB_USER']} password={config['DB_PASSWORD']} host=localhost port=5432"
     try:
         # 1. Fetch vector embedding array from local server client
         res = requests.post("http://localhost:11434/api/embeddings", json={"model": "nomic-embed-text", "prompt": chunk_text}, timeout=15)
@@ -60,7 +69,7 @@ def process_single_vector_record(task_tuple):
         pass # Gracefully skip occasional network anomalies or timeouts
 
 # Initialize Database Schema Migrations Base
-db_base_conn = "dbname=aifootprint user=db_admin_root password='Naveen_2026@' host=localhost port=5432"
+db_base_conn = f"dbname={config['DB_NAME']} user={config['DB_USER']} password={config['DB_PASSWORD']} host=localhost port=5432"
 base_conn = psycopg2.connect(db_base_conn)
 base_cur = base_conn.cursor()
 base_cur.execute("CREATE EXTENSION IF NOT EXISTS vector;")
