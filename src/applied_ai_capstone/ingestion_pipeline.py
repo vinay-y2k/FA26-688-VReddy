@@ -11,7 +11,7 @@ VECTOR_DIM = 768 if DEPLOY_ENV == "LOCAL" else 1536
 TARGET_ROW_LIMIT = 10000  
 MAX_WORKERS = 5  # Sped up across 5 parallel thread streams concurrently
 
-print(f"📦 Launching Multithreaded Ingestion Core in [{DEPLOY_ENV}] Mode...")
+print(f"Launching Multithreaded Ingestion Core in [{DEPLOY_ENV}] Mode...")
 
 # Initialize empty list to buffer raw text blocks from streaming connection
 print("🔗 Opening streaming data pool from Hugging Face...")
@@ -33,7 +33,7 @@ for row in sec_stream:
             else:
                 break
 
-print(f"✅ Text Slicing Complete. Total text segments buffered: {len(text_chunks_pool)}")
+print(f"Text Slicing Complete. Total text segments buffered: {len(text_chunks_pool)}")
 
 # Thread worker task function
 def process_single_vector_record(task_tuple):
@@ -70,10 +70,10 @@ base_cur.close()
 base_conn.close()
 
 # Launch Multithreaded Processing Engine
-print(f"🚀 Deploying ThreadPoolExecutor across {MAX_WORKERS} system threads...")
+print(f" Deploying ThreadPoolExecutor across {MAX_WORKERS} system threads...")
 tasks_payload = [(chunk, idx) for idx, chunk in enumerate(text_chunks_pool)]
 
 with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
     executor.map(process_single_vector_record, tasks_payload)
 
-print(f"\n🎉 Parallel pipeline success! Seeding complete for {TARGET_ROW_LIMIT} rows safely.")
+print(f"\n Parallel pipeline success! Seeding complete for {TARGET_ROW_LIMIT} rows safely.")
