@@ -17,7 +17,7 @@ config = dotenv_values(env_path)
 
 DEPLOY_ENV = os.getenv("DEPLOY_ENV", "LOCAL")
 VECTOR_DIM = 768 if DEPLOY_ENV == "LOCAL" else 1536
-TARGET_ROW_LIMIT = 10000  
+TARGET_ROW_LIMIT = 5000  
 MAX_WORKERS = 5  # Sped up across 5 parallel thread streams concurrently
 
 print(f"Launching Multithreaded Ingestion Core in [{DEPLOY_ENV}] Mode...")
