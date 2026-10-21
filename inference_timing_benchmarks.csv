@@ -1,0 +1,16 @@
+prompt_id,query_text,dist_financial,dist_admin,delta_margin,route_chosen,latency_ms,tokens_per_second
+1,What is the primary manufacturing scope and business overview of Imo Industries?,0.408,0.463,.0540,Path 1: Financial RAG,14033.62,6.34
+2,Show me the net corporate revenues and operational updates logged in 1993.,0.326,0.526,0.201,Path 1: Financial RAG,8516.93,11.39
+3,What are the material operational risks and segment liabilities listed?,0.418,0.466,0.049,Path 3: Fallback (Ambiguous Block),17249.76,14.55
+4,Examine the balance sheets for cash positions and quarterly earnings.,0.221,0.482,0.261,Path 1: Financial RAG,18978.12,13.81
+5,Detail the business segments and core power products manufacturing details.,0.373,0.483,0.11,Path 1: Financial RAG,9675.9,11.78
+6,Show the current table size metrics and database footprint weight.,0.477,0.19,0.288,Path 2: NL-DBA Bypass,32.58,0.0
+7,What is the physical storage size and block footprint of sec_table_1?,0.555,0.255,0.3,Path 2: NL-DBA Bypass,31.18,0.0
+8,"Examine database metrics, schema indexes, and vacuum row counts.",0.431,0.102,0.328,Path 2: NL-DBA Bypass,27.21,0.0
+9,Provide the storage size metadata footprint for the vector tables.,0.527,0.209,0.319,Path 2: NL-DBA Bypass,14.34,0.0
+10,Show database metrics and physical index storage sizes.,0.45,0.137,0.313,Path 2: NL-DBA Bypass,10.45,0.0
+11,Explain the difference between a list and a tuple in Python.,0.468,0.444,0.024,Path 3: Fallback (Ambiguous Block),29803.33,15.07
+12,Write a clean recursive function in Python to calculate a factorial.,0.483,0.524,0.041,Path 3: Fallback (Ambiguous Block),24956.38,14.87
+13,What are the primary structural differences between a B-Tree and an HNSW graph?,0.487,0.466,0.021,Path 3: Fallback (Ambiguous Block),38814.93,14.56
+14,How many states are there in the United States?,0.511,0.49,0.021,Path 3: Fallback (Ambiguous Block),3152.81,3.81
+15,Draft a professional email script notifying an advisor about a project status change.,0.421,0.565,0.144,Path 3: Fallback,26345.48,14.73
