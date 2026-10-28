@@ -9,13 +9,13 @@ from dotenv import dotenv_values
 
 # Get the path to the directory where this script lives
 script_dir = Path(__file__).resolve().parent
-env_path = script_dir / ".env"
+env_path = script_dir / ".." /".env"
 
 config = dotenv_values(env_path)
 
 # 1. PLATFORM CONFIGURATION SETTINGS
 DEPLOY_ENV = os.getenv("DEPLOY_ENV", "LOCAL")
-CSV_OUTPUT_FILE = "vector_search_benchmarks.csv"
+CSV_OUTPUT_FILE = script_dir/ ".." / "csv_image_files" / "vector_search_benchmarks.csv"
 
 # Standardized financial queries - 1 strictly mapped to 1 isolated table structure
 BENCHMARK_QUERIES = [

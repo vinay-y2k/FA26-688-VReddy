@@ -4,12 +4,18 @@ import csv
 import json
 import boto3
 import psycopg2
+from pathlib import Path
+
+
+# Get the path to the directory where this script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+# print(SCRIPT_DIR)
 
 
 DB_PASSWORD = os.environ.get("TF_VAR_db_password")
 DB_HOST = "capstone-aurora-serverless-vector-db.cluster-cmvycoausa3m.us-east-1.rds.amazonaws.com"
 DB_CONN_STR = f"dbname=aws_aifootprint user=aws_db_admin_root password={DB_PASSWORD} host={DB_HOST} port=5432"
-CSV_OUTPUT_FILE = "cloud_search_benchmarks.csv"
+CSV_OUTPUT_FILE = SCRIPT_DIR/ ".." / "csv_image_files" / "cloud_search_benchmarks.csv"
 
 # Re-uses the exact same 30 query lines from your local benchmarking harness
 from benchmarking_runner_final import BENCHMARK_QUERIES 
@@ -47,7 +53,7 @@ def execute_cloud_benchmarks():
         cur.fetchone()
         latency_indexed = (time.perf_counter() - start_indexed) * 1000
         
-        print(f"⏱️ {target_table} | Unindexed: {latency_unindexed:6.2f}ms | HNSW: {latency_indexed:5.2f}ms | Gain: {latency_unindexed/latency_indexed:5.1f}x")
+        print(f"{target_table} | Unindexed: {latency_unindexed:6.2f}ms | HNSW: {latency_indexed:5.2f}ms | Gain: {latency_unindexed/latency_indexed:5.1f}x")
         
         benchmark_records.append({
             "query_id": idx + 1,
@@ -65,7 +71,7 @@ def execute_cloud_benchmarks():
         
     cur.close()
     conn.close()
-    print(f"🎉 Complete! Logs compiled inside '{CSV_OUTPUT_FILE}'.")
+    print(f" Complete! Logs compiled inside '{CSV_OUTPUT_FILE}'.")
 
 if __name__ == "__main__":
     execute_cloud_benchmarks()

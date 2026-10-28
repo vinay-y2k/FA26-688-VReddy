@@ -48,13 +48,13 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it,create HNSW
    index: powershell  
    Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)
-   python src/local/ingestion_pipeline_final.py
+   python .\src\local\ingestion_pipeline_final.py
 4. Evaluate local DB performance and plot captured data: powershell  
-   python src/local/benchmarking_runner_final.py
-   python src/local/vector_search_benchmarks.py
+   python .\src\local\benchmarking_runner_final.py
+   python .\src\local\vector_search_benchmarks.py
 5. Generate local RAG Inference and plot captured data: powershell  
-   python src/local/run_inference_benchmarks.py
-   python src/local/plot_inference_timing.py
+   python .\src\local\run_inference_benchmarks.py
+   python .\src\local\plot_inference_timing.py
 
 ## Phase 2: Secure Public Cloud Provisioning
 
@@ -74,12 +74,12 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 ## Phase 3: Capturing Telemetry Curves & Fiscal Tear-Down
 
 1. Run DB benchmarking queries: powershell  
-   python src/cloud/cloud_benchmarker.py
+   python .\src\cloud\cloud_benchmarker.py
 2. Run RAG inference: powershell  
-   python src/cloud/cloud_rag_evaluator.py
+   python .\src\cloud\cloud_rag_evaluator.py
 3. Generate graphs :powershell  
-   python src/cloud/plot_global_comparison_final.py  
-   python src/cloud/plot_cloud_rag.py
+   python .\src\cloud\plot_global_comparison_final.py  
+   python .\src\cloud\plot_cloud_rag.py
 4. Execute automated teardown routine:powershell  
    cd src/terraform/  
    terraform destroy -auto-approve

@@ -6,6 +6,12 @@ import csv
 import boto3
 import psycopg2
 import numpy as np
+from pathlib import Path
+
+
+# Get the path to the directory where this script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+# print(SCRIPT_DIR)
 
 # ENFORCE ENVIRONMENT SECURITY GATEWAYS
 DB_PASSWORD = os.environ.get("TF_VAR_db_password")
@@ -16,7 +22,7 @@ if not DB_PASSWORD:
 # [TODO: Ensure this matches your active, publicly accessible Terraform cluster string endpoint]
 DB_HOST = "capstone-aurora-serverless-vector-db.cluster-cmvycoausa3m.us-east-1.rds.amazonaws.com"
 DB_CONN_STR = f"dbname=aws_aifootprint user=aws_db_admin_root password={DB_PASSWORD} host={DB_HOST} port=5432 sslmode=require"
-CSV_OUTPUT_FILE = "cloud_rag_inference_benchmarks.csv"
+CSV_OUTPUT_FILE = SCRIPT_DIR/ ".." / "csv_image_files" /"cloud_rag_inference_benchmarks.csv"
 
 # Import your standardized 30 query lines from your benchmarking workspace
 from benchmarking_runner_final import BENCHMARK_QUERIES

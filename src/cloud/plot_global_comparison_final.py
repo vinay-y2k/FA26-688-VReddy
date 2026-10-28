@@ -1,11 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
+
+
+# Get the path to the directory where this script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+# print(SCRIPT_DIR)
 
 def generate_global_comparison_chart():
-    local_csv = "vector_search_benchmarks.csv"
-    cloud_csv = "cloud_search_benchmarks.csv"
-    output_image = "global_latency_frontier_analysis_final.png"
+    local_csv = SCRIPT_DIR/ ".." / "csv_image_files" / "vector_search_benchmarks.csv"
+    cloud_csv = SCRIPT_DIR/ ".." / "csv_image_files" / "cloud_search_benchmarks.csv"
+    output_image = SCRIPT_DIR/ ".." / "csv_image_files" / "global_latency_frontier_analysis_final.png"
     
     try:
         # Load empirical log datasets

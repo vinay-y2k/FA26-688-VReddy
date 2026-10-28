@@ -9,11 +9,11 @@ from dotenv import dotenv_values
 
 # Get the path to the directory where this script lives
 script_dir = Path(__file__).resolve().parent
-env_path = script_dir / ".env"
+env_path = script_dir / ".." / ".env"
 
 config = dotenv_values(env_path)
 
-CSV_OUTPUT_FILE = "inference_timing_benchmarks.csv"
+CSV_OUTPUT_FILE = script_dir/ ".." / "csv_image_files" / "inference_timing_benchmarks.csv"
 
 # 15 Test prompts explicitly curated to evaluate your semantic boundaries
 TEST_SUITE = [

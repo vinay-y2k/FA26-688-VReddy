@@ -1,10 +1,16 @@
 # pip install pandas matplotlib
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+
+# Get the path to the directory where this script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+# print(SCRIPT_DIR)
 
 def generate_stacked_cloud_rag_chart():
-    csv_file = "cloud_rag_inference_benchmarks.csv"
-    output_image = "cloud_end_to_end_rag_breakdown.png"
+    csv_file = SCRIPT_DIR/ ".." / "csv_image_files" / "cloud_rag_inference_benchmarks.csv"
+    output_image = SCRIPT_DIR/ ".." / "csv_image_files" / "cloud_end_to_end_rag_breakdown.png"
     
     try:
         # Load empirical cloud performance logs
@@ -46,7 +52,7 @@ def generate_stacked_cloud_rag_chart():
         print(f"🎉 Success! Publication-grade stacked RAG chart exported to '{output_image}'.")
         
     except FileNotFoundError:
-        print(f"❌ Error: '{csv_file}' not found. Ensure your cloud_rag_evaluator.py script has completed successfully.")
+        print(f"Error: '{csv_file}' not found. Ensure your cloud_rag_evaluator.py script has completed successfully.")
 
 if __name__ == "__main__":
     generate_stacked_cloud_rag_chart()

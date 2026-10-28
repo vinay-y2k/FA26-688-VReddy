@@ -1,8 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+# Get the path to the directory where this script lives
+SCRIPT_DIR = Path(__file__).resolve().parent
+# print(SCRIPT_DIR)
+
 
 def generate_performance_curves():
-    csv_file = "vector_search_benchmarks.csv"
+    csv_file = SCRIPT_DIR /".."/"csv_image_files"/ "vector_search_benchmarks.csv"
     
     try:
         # Load empirical log matrices from your benchmarking run
@@ -37,7 +43,7 @@ def generate_performance_curves():
         
         
         # Save as a high-density, sharp image file for your Word document appendix
-        output_image = "vector_search_performance_curves_a5.png"
+        output_image = SCRIPT_DIR / ".." / "csv_image_files" / "vector_search_performance_curves_a5.png"
         plt.savefig(output_image, dpi=300, bbox_inches="tight")
         print(f"Success! Publication-grade performance chart exported directly to '{output_image}'.")
         

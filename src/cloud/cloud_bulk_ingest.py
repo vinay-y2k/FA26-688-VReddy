@@ -72,7 +72,7 @@ def run_cloud_ingestion_orchestration():
     
     for t_idx in range(TABLE_COUNT):
         t_name = f"aws_sec_table_{t_idx + 1}"
-        print(f"\n🚀 Seeding Isolated Cloud Table: [{t_name}]...")
+        print(f"\n Seeding Isolated Cloud Table: [{t_name}]...")
         
         # Open a fresh connection per table block to maintain network channel integrity
         conn = psycopg2.connect(DB_CONN_STR)
