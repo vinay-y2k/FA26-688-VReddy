@@ -8,9 +8,8 @@ To bypass shared memory buffer cache pollution anomalies that mask true algorith
 The system features an intelligent Semantic Intent Router middleware sitting at the application boundary. It computes real-time L₂-normalized vector dot products against frozen anchors to dynamically fork incoming queries, routing them down three distinct operational pathways before hitting downstream Large Language Models (LLMs):
 
                                       ┌──> Path 1 [Distance <= 0.42]: SEC Financials RAG (Heavy Compute)
-
 [User Input] ──> [Semantic Router] ───┼──> Path 2 [Distance <= 0.45]: NL-DBA Metadata Tool (1,000x Speedup)
-└──> Path 3 [Delta < 0.05 / Fallback]: General Chat Catcher Loop
+                                      └──> Path 3 [Delta < 0.05 / Fallback]: General Chat Catcher Loop
 
 • Path 1 (SEC Financial RAG): Triggers full vector database Approximate Nearest Neighbor (ANN) search loops using native pgvector operators (<=>) over the warm tables, forwarding context blocks to local or cloud LLMs [Shared, Shared].
 • Path 2 (NL-DBA Metadata Bypass): Intercepts administrative and database metric queries, executing a Zero-LLM-Cost Bypass that sweeps raw catalog statistics straight from disk [Shared, Shared]. This provides a 1,000x latency reduction (~10ms vs ~15s).
@@ -18,26 +17,7 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 
 ## Repository Structure & Core Manifest
 
-text
-├── .venv/ # Local isolated virtual environment dependencies
-├── terraform/ # Infrastructure-as-Code (IaC) configuration directory
-│ ├── main.tf # Provisions AWS VPC, Security Groups, and Aurora Serverless v2
-│ └── terraform.tfstate # State tracking ledger (Exposed via diagrams tool)
-├── src/
-│ └── applied_ai_capstone/
-│ ├── **init**.py
-│ ├── app_core.py # Unified local/cloud runtime system & intent router engine
-│ ├── cloud_bulk_ingest.py # Asynchronous multi-threaded 300K cloud database seeder
-│ ├── cloud_benchmarker.py # Severs un-cached cloud similarity search metric profiles
-│ ├── cloud_rag_evaluator.py # End-to-end cloud RAG prompt execution metrics log
-│ ├── benchmarking_runner.py # Standardized local 30-table evaluation suite harness
-│ ├── plot_inference_timing.py# Compiles horizontal multi-path routing bar charts
-│ ├── plot_cloud_rag.py # Automates stacked database-vs-generation line charts
-│ └── create_batch_manifest.py# Compiles 300K async S3 JSONL batch input payloads
-├── .env.example # Baseline structural database credential layout shell
-├── inference_timing_benchmarks.csv# Output data sheet logging multi-path routing latencies
-├── cloud_search_benchmarks.csv # Output data sheet tracking cloud similarity search boundaries
-└── README.md # Primary project system documentation handbook
+
 
 ## Environmental Specifications
 
@@ -64,15 +44,16 @@ text
    ollama pull nomic-embed-text
    ollama pull qwen2.5:3b
    Overwrite default Ollama parallel execution parameters and boot your local server instance safely: powershell
-   $env:OLLAMA_NUM_GPU="99" ; $env:OLLAMA_NUM_PARALLEL="999";$env:OLLAMA_MAX_LOADED_MODELS="2";$env:OLLAMA_FLASH_ATTENTION="1";$env:OLLAMA_VULKAN="1";$env:GGML_VK_VISIBLE_DEVICES="0"
+    $env:OLLAMA_NUM_GPU="99;$env:OLLAMA_NUM_PARALLEL="999";$env:OLLAMA_MAX_LOADED_MODELS="2";$env:OLLAMA_FLASH_ATTENTION="1"
+    ;$env:OLLAMA_VULKAN="1";$env:GGML_VK_VISIBLE_DEVICES="0"
    ollama serve
-3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW index: powershell
+4. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW index: powershell
    Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)
    python src/applied_ai_capstone/ingestion_pipeline_final.py
-4. Evaluate local DB performance and plot captured data: powershell
+5. Evaluate local DB performance and plot captured data: powershell
    python src/applied_ai_capstone/benchmarking_runner_final.py
    python src/applied_ai_capstone/vector_search_benchmarks.py
-5. Generate local RAG Inference and plot captured data: powershell
+6. Generate local RAG Inference and plot captured data: powershell
    python src/applied_ai_capstone/run_inference_benchmarks.py
    python src/applied_ai_capstone/plot_inference_timing.py
 
