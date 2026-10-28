@@ -7,13 +7,12 @@ To bypass shared memory buffer cache pollution anomalies that mask true algorith
 
 The system features an intelligent Semantic Intent Router middleware sitting at the application boundary. It computes real-time L₂-normalized vector dot products against frozen anchors to dynamically fork incoming queries, routing them down three distinct operational pathways before hitting downstream Large Language Models (LLMs):
 
-                                      ┌──> Path 1 [Distance <= 0.42]: SEC Financials RAG (Heavy Compute)
-[User Input] ──> [Semantic Router] ───┼──> Path 2 [Distance <= 0.45]: NL-DBA Metadata Tool (1,000x Speedup)
-                                      └──> Path 3 [Delta < 0.05 / Fallback]: General Chat Catcher Loop
+<img width="902" height="328" alt="image" src="https://github.com/user-attachments/assets/3e556cd2-6e56-4885-b1ab-4479d8ff567e" />
 
-• Path 1 (SEC Financial RAG): Triggers full vector database Approximate Nearest Neighbor (ANN) search loops using native pgvector operators (<=>) over the warm tables, forwarding context blocks to local or cloud LLMs [Shared, Shared].
-• Path 2 (NL-DBA Metadata Bypass): Intercepts administrative and database metric queries, executing a Zero-LLM-Cost Bypass that sweeps raw catalog statistics straight from disk [Shared, Shared]. This provides a 1,000x latency reduction (~10ms vs ~15s).
-• Path 3 (Fallback General Chat): Catches ambiguous queries or generic prompts via a strict Relative Confidence Delta Gate (< 0.05) to safely prevent semantic misfires.
+
+Path 1 (SEC Financial RAG): Triggers full vector database Approximate Nearest Neighbor (ANN) search loops using native pgvector operators (<=>) over the warm tables, forwarding context blocks to local or cloud LLMs [Shared, Shared].
+Path 2 (NL-DBA Metadata Bypass): Intercepts administrative and database metric queries, executing a Zero-LLM-Cost Bypass that sweeps raw catalog statistics straight from disk [Shared, Shared]. This provides a 1,000x latency reduction (~10ms vs ~15s).
+Path 3 (Fallback General Chat): Catches ambiguous queries or generic prompts via a strict Relative Confidence Delta Gate (< 0.05) to safely prevent semantic misfires.
 
 ## Repository Structure & Core Manifest
 
