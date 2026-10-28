@@ -16,7 +16,36 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 
 ## Repository Structure & Core Manifest
 
-
+src/
+│
+├── requirements.txt                                    # All Python dependencies
+│
+├── local/
+│   ├── ingestion_pipeline_final.py                    # Data Ingestion to local Postgres DB
+│   └── benchmarking_runner_final.py                   # Run DB Benchmarking queries
+│   └── vector_search_benchmarks.py                    # Plot DB performance data
+|   └── run_inference_benchmarks.py                    # Local RAG Inference
+|   └── plot_inference_timing.py                       # Plot RAG Inference timings
+├── cloud/
+│   ├── cloud_bulk_ingest.py                           # Ingest dataset to AWS Aurora Postgres DB
+│   └── cloud_benchmarker.py                           # Run DB Benchmarking queries
+|   └── cloud_rag_evaluator.py                         # RUN RAG inference 
+|   └── plot_global_comparison_final.py                # plot DB performance graph
+|   └── plot_cloud_rag.py                              # Plot RAG inference data
+│
+├── terraform/
+│   └── main.tf                                        # Terraform script for AWS infra deployment
+│
+├── csv_image_files/                         
+|   └── vector_search_benchmarks.csv                   # Local DB search timings csv file
+|   └── inference_timing_benchmarks.csv                # Semantic routing timings csv file
+|   └── cloud_search_benchmarks.csv                    # Aurora DB search timings csv file
+|   └── cloud_rag_inference_benchmarks.csv             # Cloud RAG inference timings csv file
+|   └── vector_search_performance_curves_a5.png        # Local DB performance graph
+|   └── global_latency_frontier_analysis_final.png     # Local Vs Cloud DB performance graph
+|   └── inference_latency_comparison_u2.png            # Local RAG inference with Semantic routing graph
+|   └── cloud_end_to_end_rag_breakdown.png             # Cloud RAG inference graph
+└── .env example                                       # Template — safe to commit
 
 ## Environmental Specifications
 
