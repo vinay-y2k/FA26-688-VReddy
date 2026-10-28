@@ -36,16 +36,17 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 
 ## Phase 1: Local Environment
 
-1. Setup and run Postgres DB inside a Docker VM: powershell
+1. Setup and run Postgres DB inside a Docker VM: powershell  
    docker run --name local-vector-db -e POSTGRES_DB=aifootprint -e POSTGRES_USER=db_admin_root -e POSTGRES_PASSWORD="xxxxx" -p 5432:5432 -d pgvector/pgvector:pg16
 2. Install Ollama software from https://ollama.com/download and install below AI models
-   ollama pull nomic-embed-text
-   ollama pull qwen2.5:3b
-   Overwrite default Ollama parallel execution parameters and boot your local server instance safely: powershell
+   ollama pull nomic-embed-text  
+   ollama pull qwen2.5:3b  
+   Overwrite default Ollama parallel execution parameters and boot your local server instance safely: powershell  
    $env:OLLAMA_NUM_GPU="99;$env:OLLAMA_NUM_PARALLEL="999";$env:OLLAMA_MAX_LOADED_MODELS="2";$env:OLLAMA_FLASH_ATTENTION="1"
-   ;$env:OLLAMA_VULKAN="1";$env:GGML_VK_VISIBLE_DEVICES="0"
+   ;$env:OLLAMA_VULKAN="1";$env:GGML_VK_VISIBLE_DEVICES="0"  
    ollama serve
-3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW index: powershell
+3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW  
+   index: powershell  
    Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)
    python src/local/ingestion_pipeline_final.py
 4. Evaluate local DB performance and plot captured data: powershell
@@ -57,29 +58,30 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 
 ## Phase 2: Secure Public Cloud Provisioning
 
-1. Inject your master database credentials token directly into local memory :powershell
-   cd terraform
+1. Inject your master database credentials token directly into local memory :powershell  
+   cd terraform  
    $env:TF_VAR_db_password="YourCompliantSecureSecretPassword2026!"
-2. Initialize and deploy your managed serverless cloud matrix via terraform :powershell
-   terraform init
+2. Initialize and deploy your managed serverless cloud matrix via terraform :powershell  
+   terraform init  
    terraform apply -auto-approve
-3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW index: AWS Cloud shell to avoid network delays
-   Copy the output cluster database string endpoint printed to your console, paste it into the DB_HOST variable string inside cloud_bulk_ingest.py script.
-   Open AWS Cloud shell and upload cloud_bulk_ingest.py
-   export TF_VAR_db_password="YourCompliantSecureSecretPassword2026!"
+3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW  
+   index: AWS Cloud shell to avoid network delays  
+   Copy the output cluster database string endpoint printed to your console, paste it into the DB_HOST variable string inside cloud_bulk_ingest.py script.  
+   Open AWS Cloud shell and upload cloud_bulk_ingest.py  
+   export TF_VAR_db_password="YourCompliantSecureSecretPassword2026!"  
    python cloud_bulk_ingest.py
 
 ## Phase 3: Capturing Telemetry Curves & Fiscal Tear-Down
 
-1. Run DB benchmarking queries: powershell
+1. Run DB benchmarking queries: powershell  
    python src/cloud/cloud_benchmarker.py
-2. Run RAG inference: powershell
+2. Run RAG inference: powershell  
    python src/cloud/cloud_rag_evaluator.py
-3. Generate graphs :powershell
-   python src/cloud/plot_global_comparison_final.py
+3. Generate graphs :powershell  
+   python src/cloud/plot_global_comparison_final.py  
    python src/cloud/plot_cloud_rag.py
-4. Execute automated teardown routine:powershell
-   cd ../../terraform/
+4. Execute automated teardown routine:powershell  
+   cd src/terraform/  
    terraform destroy -auto-approve
 
 ## Empirical Metrics & Systems Insights
