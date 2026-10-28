@@ -47,13 +47,13 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
    ollama serve
 3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it,create HNSW
    index: powershell  
-   Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)
+   Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)  
    python .\src\local\ingestion_pipeline_final.py
 4. Evaluate local DB performance and plot captured data: powershell  
-   python .\src\local\benchmarking_runner_final.py
+   python .\src\local\benchmarking_runner_final.py  
    python .\src\local\vector_search_benchmarks.py
 5. Generate local RAG Inference and plot captured data: powershell  
-   python .\src\local\run_inference_benchmarks.py
+   python .\src\local\run_inference_benchmarks.py  
    python .\src\local\plot_inference_timing.py
 
 ## Phase 2: Secure Public Cloud Provisioning
