@@ -38,21 +38,21 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 
 1. Setup and run Postgres DB inside a Docker VM: powershell  
    docker run --name local-vector-db -e POSTGRES_DB=aifootprint -e POSTGRES_USER=db_admin_root -e POSTGRES_PASSWORD="xxxxx" -p 5432:5432 -d pgvector/pgvector:pg16
-2. Install Ollama software from https://ollama.com/download and install below AI models
+2. Install Ollama software from https://ollama.com/download and install below AI models  
    ollama pull nomic-embed-text  
    ollama pull qwen2.5:3b  
    Overwrite default Ollama parallel execution parameters and boot your local server instance safely: powershell  
    $env:OLLAMA_NUM_GPU="99;$env:OLLAMA_NUM_PARALLEL="999";$env:OLLAMA_MAX_LOADED_MODELS="2";$env:OLLAMA_FLASH_ATTENTION="1"
    ;$env:OLLAMA_VULKAN="1";$env:GGML_VK_VISIBLE_DEVICES="0"  
    ollama serve
-3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW  
+3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it,create HNSW
    index: powershell  
    Populate .env file with Variables(DB_NAME,DB_USERNAME,DB_PASSWORD)
    python src/local/ingestion_pipeline_final.py
-4. Evaluate local DB performance and plot captured data: powershell
+4. Evaluate local DB performance and plot captured data: powershell  
    python src/local/benchmarking_runner_final.py
    python src/local/vector_search_benchmarks.py
-5. Generate local RAG Inference and plot captured data: powershell
+5. Generate local RAG Inference and plot captured data: powershell  
    python src/local/run_inference_benchmarks.py
    python src/local/plot_inference_timing.py
 
@@ -64,7 +64,7 @@ The system features an intelligent Semantic Intent Router middleware sitting at 
 2. Initialize and deploy your managed serverless cloud matrix via terraform :powershell  
    terraform init  
    terraform apply -auto-approve
-3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW  
+3. Ingest Data - Stream dataset from hugging face, data chunking, generate vector embeddings, create DB table, populate it, create HNSW
    index: AWS Cloud shell to avoid network delays  
    Copy the output cluster database string endpoint printed to your console, paste it into the DB_HOST variable string inside cloud_bulk_ingest.py script.  
    Open AWS Cloud shell and upload cloud_bulk_ingest.py  
